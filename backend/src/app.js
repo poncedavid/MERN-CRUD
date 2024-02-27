@@ -1,6 +1,12 @@
 import express from 'express';
+import morgan from 'morgan';
+
+import authRoutes from './routes/auth.routes.js';
 
 const app = express();
 
-app.listen(3000)
-console.log('El servidor esta en el puerto :D', 3000);
+app.use(morgan('dev'));
+app.use(express.json());
+
+app.use("/api", authRoutes);
+export default app;
