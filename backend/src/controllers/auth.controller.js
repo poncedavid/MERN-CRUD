@@ -69,6 +69,24 @@ export const logout = (req, res) => {
         expires: new Date(0),
 
     })
+    res.send("Haz cerrado sesión y limpiado cookies.")
     return res.sendStatus(204);
+
+}
+
+export const profile = async (req, res) => {
+
+  const userFound = await User.findById(req.user.id)
+  if(!userFound) return res.status(400).json({message: "Usuario no encontrado"})
+
+  return res.json({
+    //Para no mostrar el password
+    // Parametros que se van a mostrar en el front
+    id: userFound._id,
+    username: userFound.username,
+    email: userFound.email,
+    createdAt: userFound.createdAt,
+    updatedAt: userFound.updatedAt,
+  });
 
 }
