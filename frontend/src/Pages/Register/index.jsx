@@ -1,5 +1,5 @@
 import Layout from "../../Layout"
-import Formulario from "../../Components/Formulario"
+
 
 
 function Register() {
@@ -7,7 +7,11 @@ function Register() {
 
     <Layout>
         <h1>Register</h1>
-        <Formulario />
+
+
+
+
+
     </Layout>
   )
 }

@@ -6,7 +6,10 @@ function LogIn() {
 
     <Layout>
 
-        <h1>LogIn</h1>
+
+
+
+    
     </Layout>
   )
 }
