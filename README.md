@@ -55,3 +55,7 @@ npm install axios
 
 @octocat :+1: This PR looks great - it's ready to merge! :shipit:
 
+# Para manejo de formularios.
+
+1. Instalamos [Reac Hook Form](https://react-hook-form.co)
+``` npm i react-hook-form ```
