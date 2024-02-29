@@ -1,9 +1,13 @@
 export const validateSchema = (schema) => (req, res, next) => {
-    try {
-        schema.parse(req.body);
-        next();
-    } catch (error) {
-        res.status(400)
-        .json({ error: error.errors.map((err) => err.message)});
-    }
-    }
+  // Middleware para validar el esquema
+  try {
+    // Intentar validar el esquema
+    schema.parse(req.body); // Parsear el cuerpo de la petición con el esquema
+    next(); // Si el esquema es válido, pasar al siguiente middleware
+  } catch (error) {
+    // Si hay un error
+    res
+      .status(400) // Responder con un estado 400
+      .json({ error: error.errors.map((err) => err.message) }); // Enviar un mensaje de error con los errores encontrados
+  }
+};

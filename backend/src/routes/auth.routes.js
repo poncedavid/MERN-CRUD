@@ -1,21 +1,27 @@
-import { Router } from "express";
+import { Router } from "express"; // Importando Router desde express para crear las rutas
 import {
   login,
   logout,
   profile,
   register,
-} from "../controllers/auth.controller.js";
+} from "../controllers/auth.controller.js"; // Importando los controladores de autenticación
 
-import {authRequired} from "../middlewares/validateToken.js";
-import { validateSchema } from "../middlewares/validator.middleware.js";
-import { registerSchema, loginSchema } from "../validators/auth.validator.js";
+import { authRequired } from "../middlewares/validateToken.js"; // Importando el middleware para verificar el token
+import { validateSchema } from "../middlewares/validator.middleware.js"; // Importando el middleware para validar el esquema
+import { registerSchema, loginSchema } from "../validators/auth.validator.js"; // Importando los esquemas de validación para autenticación
 
-const router = Router();
+const router = Router(); // Creando una instancia de Router
 
-router.post("/register", validateSchema(registerSchema), register);
-router.post("/login", validateSchema(loginSchema), login);
-router.post("/logout", logout);
+router.post( // Metodo para registrar un usuario
 
-router.get("/profile",authRequired,profile);
+  "/register", // Ruta para registrar un usuario
+  validateSchema(registerSchema), // Middleware para validar el esquema
+  register); // Ruta para regist
 
-export default router;
+router.post("/login", validateSchema(loginSchema), login); // Ruta para iniciar sesión
+
+router.post("/logout", logout); // Ruta para cerrar sesión
+
+router.get("/profile", authRequired, profile); // Ruta para obtener el perfil del usuario
+
+export default router; // Exportando las rutas de autenticación

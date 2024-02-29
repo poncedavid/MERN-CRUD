@@ -3,25 +3,26 @@ import bcrypt from "bcryptjs"; // Importando bcrypt para encriptar la contraseñ
 
 import { createAccessToken } from "../libs/jwt.js"; // Importando la función para crear el token
 
-export const register = async (req, res) => { 
-  // Crear un nuevo usuario en la base de datos
+export const register = async (req, res) => {
+  //Crear un nuevo usuario en la base de datos
 
-  const { username, email, password } = req.body; // Obteniendo los datos del usuario
+  const { username, email, password } = req.body; //Obteniendo los datos del usuario
 
   try {
-    const passwordHash = await bcrypt.hash(password, 10); // Encriptando la contraseña
+    const passwordHash = await bcrypt.hash(password, 10); //Encriptando la contraseña
 
-    const newUser = new User({ // Creando un nuevo usuario con los datos obtenidos
+    const newUser = new User({
+      //Creando un nuevo usuario con los datos obtenidos
       username,
       email,
       password: passwordHash,
     });
-    const userSaved = await newUser.save(); // Guardar en la base de datos
-    const token = await createAccessToken({ id: userSaved._id }); // Crear token
-    res.cookie("token", token);
+    const userSaved = await newUser.save(); //Guardar en la base de datos
+    const token = await createAccessToken({ id: userSaved._id }); //Crear token
+    res.cookie("token", token); // Guardar el token en las cookies
     res.json({
       //Para no mostrar el password
-      // Parametros que se van a mostrar en el front
+      //Parametros que se van a mostrar en el front
       _id: userSaved._id,
       username: userSaved.username,
       email: userSaved.email,
@@ -29,29 +30,35 @@ export const register = async (req, res) => {
       updatedAt: userSaved.updatedAt,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    // Si hay un error
+    res.status(500).json({ message: error.message }); // Responder con un estado 500 y un mensaje de error
   }
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  // Iniciar sesión
+  const { email, password } = req.body; // Obtener el email y la contraseña del cuerpo de la petición
 
   try {
-    const userFound = await User.findOne({ email });
+    // Intentar hacer lo siguiente
+    const userFound = await User.findOne({ email }); // Buscar el usuario por el email
     if (!userFound)
-      return res.status(400).json({ message: "Usuario no encontrado" });
+      // Si no se encuentra el usuario
+      return res.status(400).json({ message: "Usuario no encontrado" }); // Responder con un estado 400 y un mensaje de error
 
-    const isMatch = await bcrypt.compare(password, userFound.password);
+    const isMatch = await bcrypt.compare(password, userFound.password); // Comparar la contraseña
 
     if (!isMatch)
-      return res.status(400).json({ message: "Contraseña incorrecta" });
+      // Si no coincide la contraseña
+      return res.status(400).json({ message: "Contraseña incorrecta" }); // Responder con un estado 400 y un mensaje de error
 
     // no es recomendado enviar tantos mensajes de usuario y contraseña incorrecta por seguridad. La persona que intente hackear la cuenta puede saber si el usuario existe o no.
     // Se recomienda enviar un mensaje generico como "Usuario o contraseña incorrecta"
 
     const token = await createAccessToken({ id: userFound._id }); // Crear token
-    res.cookie("token", token);
+    res.cookie("token", token); // Guardar el token en las cookies
     res.json({
+      // Responder con un estado 200 y los siguientes datos
       //Para no mostrar el password
       // Parametros que se van a mostrar en el front
       _id: userFound._id,
@@ -61,25 +68,33 @@ export const login = async (req, res) => {
       updatedAt: userFound.updatedAt,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    // Si hay un error
+    res.status(500).json({ message: error.message }); // Responder con un estado 500 y un mensaje de error
   }
 };
 
 export const logout = (req, res) => {
+  // Cerrar sesión
+
   res.cookie("token", "", {
-    expires: new Date(0),
+    // Limpiar las cookies
+    expires: new Date(0), // Fecha de expiración
   });
-  res.send("Haz cerrado sesión y limpiado cookies.");
-  return res.sendStatus(204);
+
+  res.send("Haz cerrado sesión y limpiado cookies."); // Responder con un mensaje
+  return res.sendStatus(204); // Responder con un estado 204
 };
 
 export const profile = async (req, res) => {
-  const userFound = await User.findById(req.user.id);
+  // Perfil del usuario
+
+  const userFound = await User.findById(req.user.id); // Buscar el usuario por el id
   if (!userFound)
-    return res.status(400).json({ message: "Usuario no encontrado" });
+    // Si no se encuentra el usuario
+    return res.status(400).json({ message: "Usuario no encontrado" }); // Responder con un estado 400 y un mensaje de error
 
   return res.json({
-    //Para no mostrar el password
+    // Responder con un estado 200 y los siguientes datos
     // Parametros que se van a mostrar en el front
     id: userFound._id,
     username: userFound.username,
