@@ -1,15 +1,17 @@
-import User from "../models/user.model.js";
-import bcrypt from "bcryptjs";
+import User from "../models/user.model.js"; // Importando el modelo de usuario para la base de datos
+import bcrypt from "bcryptjs"; // Importando bcrypt para encriptar la contraseña
 
-import { createAccessToken } from "../libs/jwt.js";
+import { createAccessToken } from "../libs/jwt.js"; // Importando la función para crear el token
 
-export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+export const register = async (req, res) => { 
+  // Crear un nuevo usuario en la base de datos
+
+  const { username, email, password } = req.body; // Obteniendo los datos del usuario
 
   try {
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10); // Encriptando la contraseña
 
-    const newUser = new User({
+    const newUser = new User({ // Creando un nuevo usuario con los datos obtenidos
       username,
       email,
       password: passwordHash,
@@ -64,20 +66,17 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-    res.cookie("token", "",
-    {
-        expires: new Date(0),
-
-    })
-    res.send("Haz cerrado sesión y limpiado cookies.")
-    return res.sendStatus(204);
-
-}
+  res.cookie("token", "", {
+    expires: new Date(0),
+  });
+  res.send("Haz cerrado sesión y limpiado cookies.");
+  return res.sendStatus(204);
+};
 
 export const profile = async (req, res) => {
-
-  const userFound = await User.findById(req.user.id)
-  if(!userFound) return res.status(400).json({message: "Usuario no encontrado"})
+  const userFound = await User.findById(req.user.id);
+  if (!userFound)
+    return res.status(400).json({ message: "Usuario no encontrado" });
 
   return res.json({
     //Para no mostrar el password
@@ -88,5 +87,4 @@ export const profile = async (req, res) => {
     createdAt: userFound.createdAt,
     updatedAt: userFound.updatedAt,
   });
-
-}
+};

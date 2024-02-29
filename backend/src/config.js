@@ -1,1 +1,1 @@
-export const TOKEN_SECRET = 'alunga clave secreta'
+export const TOKEN_SECRET = 'alunga clave secreta' // Clave secreta para firmar el token
