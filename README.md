@@ -59,3 +59,5 @@ npm install axios
 
 1. Instalamos [Reac Hook Form](https://react-hook-form.co)
 ``` npm i react-hook-form ```
+
+2. Con axios hacemos peticiones a nuestra api.

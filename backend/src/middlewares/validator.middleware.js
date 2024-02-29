@@ -8,6 +8,6 @@ export const validateSchema = (schema) => (req, res, next) => {
     // Si hay un error
     res
       .status(400) // Responder con un estado 400
-      .json({ error: error.errors.map((err) => err.message) }); // Enviar un mensaje de error con los errores encontrados
+      .json( error.errors.map((err) => err.message) ); // Enviar un mensaje de error con los errores encontrados
   }
 };

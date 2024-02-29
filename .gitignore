@@ -24,3 +24,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+backend/package-lock.json
+backend/node_modules/.package-lock.json

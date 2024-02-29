@@ -19,3 +19,5 @@ instalamos ```npm i jsonwebtoken``` para generar token para el inicio de sesion 
 instalamos middlewares para transformar cookies a json ```npm i cookie-parser ``` y lo importamos en app.js
 
 para validar los datos dentro del backend ZOD - NPM ```npm i zod```
+
+instalamos cors ``` npm i cors ```

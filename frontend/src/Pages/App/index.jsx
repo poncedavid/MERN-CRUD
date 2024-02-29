@@ -1,6 +1,9 @@
 //Importando paquetes para navegar.
 import { useRoutes, BrowserRouter } from "react-router-dom";
 
+//Importando contexto de usuario.
+import { AuthProvider} from "../../Context/AuthContext.jsx";
+
 
 //Importando las paginas.
 import Home from "../Home"
@@ -12,10 +15,11 @@ import LogOut from "../LogOut";
 import Nasa from "../Nasa";
 import Joker from "../Joker";
 import Api from "../Api";
+import Register from "../Register";
 
 //Importando los componentes.
 import NavBar from "../../Components/NavBar"
-import Register from "../Register";
+
 
 
 
@@ -61,6 +65,11 @@ const AppRoutes = ()=>{
       element: <Api />
     },
     {
+      path: "/home",
+      element: <Home />
+    
+    },
+    {
       path: "*",
       element: <NotFound />
     }
@@ -75,10 +84,14 @@ const AppRoutes = ()=>{
 const App = () =>{
 
   return (
+
+    <AuthProvider>
     <BrowserRouter>
     <AppRoutes />
     <NavBar />
     </BrowserRouter>
+    </AuthProvider>
+
   )
 }
 
