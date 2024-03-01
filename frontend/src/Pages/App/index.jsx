@@ -2,97 +2,64 @@
 import { useRoutes, BrowserRouter } from "react-router-dom";
 
 //Importando contexto de usuario.
-import { AuthProvider} from "../../Context/AuthContext.jsx";
-
+import { AuthProvider } from "../../Context/AuthContext.jsx";
 
 //Importando las paginas.
-import Home from "../Home"
-import NotFound from "../NotFound"
-import Service from "../Service"
-import About from "../About";
+import Home from "../Home";
+import NotFound from "../NotFound";
 import LogIn from "../LogIn";
 import LogOut from "../LogOut";
-import Nasa from "../Nasa";
-import Joker from "../Joker";
+
 import Api from "../Api";
 import Register from "../Register";
 
 //Importando los componentes.
-import NavBar from "../../Components/NavBar"
+import NavBar from "../../Components/NavBar";
 
-
-
-
-
-
-const AppRoutes = ()=>{
-
+const AppRoutes = () => {
   let routes = useRoutes([
     {
       path: "/",
-      element: <Home />
-    },
-    {
-      path: "/service",
-      element: <Service />
-    },
-    {
-      path: "/about",
-      element: <About />
+      element: <Home />,
     },
     {
       path: "/login",
-      element: <LogIn />
+      element: <LogIn />,
     },
     {
       path: "/logout",
-      element: <LogOut />
+      element: <LogOut />,
     },
     {
       path: "/register",
-      element: <Register />
-    },
-    {
-      path:"/nasa",
-      element: <Nasa />
-    },
-    {
-      path:"/joker",
-      element: <Joker />
+      element: <Register />,
     },
     {
       path: "/api",
-      element: <Api />
+      element: <Api />,
     },
     {
       path: "/home",
-      element: <Home />
-    
+      element: <Home />,
     },
     {
       path: "*",
-      element: <NotFound />
-    }
-  ])
+      element: <NotFound />,
+    },
+  ]);
 
-  return routes
-}
+  return routes;
+};
 
-
-
-
-const App = () =>{
-
+const App = () => {
   return (
-
     <AuthProvider>
-    <BrowserRouter>
-    <AppRoutes />
-    <NavBar />
-    </BrowserRouter>
+      <BrowserRouter>
+        <AppRoutes />
+        <NavBar />
+      </BrowserRouter>
     </AuthProvider>
+  );
+};
 
-  )
-}
-
-export default App
+export default App;

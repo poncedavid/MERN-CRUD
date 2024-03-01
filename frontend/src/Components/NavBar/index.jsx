@@ -11,17 +11,9 @@ const Navbar = () => {
                 <NavLink to="/">Home</NavLink>
             </li>
             <li>
-                <NavLink to="/service">Service</NavLink>
+                <NavLink to="/api">API'S</NavLink>
             </li>
-            <li>
-                <NavLink to="/about">About</NavLink>
-            </li>
-            <li>
-                <NavLink to="/nasa">Nasa API</NavLink>
-            </li>
-            <li>
-                <NavLink to="/joker">Joker API</NavLink>
-            </li>
+    
 
         </ul>
 
@@ -34,9 +26,7 @@ const Navbar = () => {
             <li>
                 <NavLink to="/register">Registrarse</NavLink>
             </li>
-            <li>
-                <NavLink to="/profile">Perfil</NavLink>
-            </li>
+
         </ul>
         </nav>
 
