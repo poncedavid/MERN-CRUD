@@ -1,8 +1,8 @@
 import User from "../models/user.model.js"; // Importando el modelo de usuario para la base de datos
-
 import bcrypt from "bcryptjs"; // Importando bcrypt para encriptar la contraseña
-
 import { createAccessToken } from "../libs/jwt.js"; // Importando la función para crear el token
+import jwt from "jsonwebtoken"; // Importando jwt para verificar el token
+import { TOKEN_SECRET } from "../config.js";
 
 export const register = async (req, res) => {
   //Crear un nuevo usuario en la base de datos
@@ -127,3 +127,24 @@ export const profile = async (req, res) => {
     updatedAt: userFound.updatedAt,
   });
 };
+
+
+export const verifyToken = async (req, res) => { // Verificar el token
+  const {token} = req.cookies; // Obtener el token de las cookies
+
+  if (!token) return res.status(401).json({ message: "Unauthorized" }); // Si no hay token, responder con un estado 401 y un mensaje de error
+
+  jwt.verify(token, TOKEN_SECRET, async (err, user) => { // Verificar el token
+    if (err) return res.status(401).json({ message: "Unauthorized" }); // Si hay un error, responder con un estado 401 y un mensaje de error
+
+    const userFound = await User.findById(user.id); // Buscar el usuario por el id
+    if (!userFound) // Si no se encuentra el usuario
+      return res.status(400).json({ message: "Unauthorized" }); // Responder con un estado 400 y un mensaje de error
+
+    return res.json({ // Responder con un estado 200 y los siguientes datos
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+    });
+  }); 
+}

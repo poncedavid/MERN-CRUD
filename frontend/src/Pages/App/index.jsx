@@ -1,5 +1,5 @@
 //Importando paquetes para navegar.
-import { useRoutes, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 //Importando contexto de usuario.
 import { AuthProvider } from "../../Context/AuthContext.jsx";
@@ -8,54 +8,36 @@ import { AuthProvider } from "../../Context/AuthContext.jsx";
 import Home from "../Home";
 import NotFound from "../NotFound";
 import LogIn from "../LogIn";
-import LogOut from "../LogOut";
-
+import TaskPage from "../Task";
+import TaskFormPage from "../TaskForm";
 import Api from "../Api";
 import Register from "../Register";
+import ProfilePage from "../Profile/index.jsx";
 
 //Importando los componentes.
 import NavBar from "../../Components/NavBar";
 
-const AppRoutes = () => {
-  let routes = useRoutes([
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/login",
-      element: <LogIn />,
-    },
-    {
-      path: "/logout",
-      element: <LogOut />,
-    },
-    {
-      path: "/register",
-      element: <Register />,
-    },
-    {
-      path: "/api",
-      element: <Api />,
-    },
-    {
-      path: "/home",
-      element: <Home />,
-    },
-    {
-      path: "*",
-      element: <NotFound />,
-    },
-  ]);
-
-  return routes;
-};
+//Importando protección de rutas.
+import ProtectedRoute from "../../Components/ProtectedRoute/index.jsx";
 
 const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <AppRoutes />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/api" element={<Api />} />
+        <Route path="*" element={<NotFound />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/tasks" element={<TaskPage />} />
+          <Route path="/add-task" element={<TaskFormPage />} />
+          <Route path="/tasks/:id" element={<TaskFormPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
+      </Routes>
         <NavBar />
       </BrowserRouter>
     </AuthProvider>

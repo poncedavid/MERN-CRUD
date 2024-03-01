@@ -13,6 +13,9 @@ const Navbar = () => {
             <li>
                 <NavLink to="/api">API'S</NavLink>
             </li>
+            <li>
+                <NavLink to="/tasks">Tareas</NavLink>
+            </li>
     
 
         </ul>
