@@ -1,4 +1,5 @@
 import User from "../models/user.model.js"; // Importando el modelo de usuario para la base de datos
+
 import bcrypt from "bcryptjs"; // Importando bcrypt para encriptar la contraseña
 import { createAccessToken } from "../libs/jwt.js"; // Importando la función para crear el token
 import jwt from "jsonwebtoken"; // Importando jwt para verificar el token
@@ -12,6 +13,7 @@ export const register = async (req, res) => {
   try {
     const userFound = await User.findOne({ email }); //Buscar el usuario por el email
     const userFoundUsername = await User.findOne({ username }); //Buscar el usuario por el username
+    
     if (userFound)
       //Si el correo ya existe
       return res.status(400).json(["The mail already exists"]); // Responder con un estado 400 y un mensaje de error

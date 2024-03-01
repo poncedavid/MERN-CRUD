@@ -16,7 +16,7 @@ function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/nasa");
+    if (isAuthenticated) navigate("/home");
   }, [isAuthenticated]);
 
   const onSubmit = handleSubmit(async (values) => {

@@ -35,12 +35,16 @@ const App = () => {
             <Route path="/api" element={<Api />} />
             <Route path="*" element={<NotFound />} />
 
+            {/* Estas rutas solo se acceden con el usiario registrado */}
+
             <Route element={<ProtectedRoute />}>
+    
               <Route path="/tasks" element={<TaskPage />} />
               <Route path="/tasks/new" element={<TaskFormPage />} />
               <Route path="/tasks/:id" element={<TaskFormPage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
+
           </Routes>
           <NavBar />
         </BrowserRouter>
