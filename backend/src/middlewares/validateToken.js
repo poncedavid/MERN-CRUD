@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"; // Importando la librería jsonwebtoken para verificar el token
+
 import { TOKEN_SECRET } from "../config.js"; // Importando la clave secreta para firmar el token
 
 export const authRequired = (req, res, next) => {

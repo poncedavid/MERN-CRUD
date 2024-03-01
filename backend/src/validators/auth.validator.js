@@ -2,24 +2,32 @@ import z from "zod"; // Importamoms zod para validar los datos
 
 export const registerSchema = z.object({
   // Esquema para registrar un usuario
+
+
   username: z // El nombre de usuario
     .string({
       // Tipo de dato
-      required_error: "username is required", // Mensaje de error si no se proporciona el nombre de usuario
+      message: "username is required", // Mensaje de error si no se proporciona el nombre de usuario
     })
     .min(3, {
       message: "username must be at least 3 characters long",
     }), // El nombre de usuario debe tener al menos 3 caracteres
+
+
+
   email: z
     .string({
-      required_error: "email is required",
+      message: "email is required",
     })
     .email({
-      required_error: "email is invalid",
+      message: "email is invalid",
     }),
+
+
+    
   password: z
     .string({
-      required_error: "password is required",
+      message: "password is required",
     })
     .min(6, {
       message: "password must be at least 6 characters long",
@@ -31,14 +39,17 @@ export const loginSchema = z.object({
   email: z // El email
     .string({
       // Tipo de dato
-      requiered_error: "Email es requerido",
+      message: "Email es requerido",
     })
     .email({
       message: "Email es inválido",
     }),
   password: z
     .string({
-      required_error: "Password es requerido",
+      message: "Password es requerido",
     })
-    .min(6), // La contraseña debe tener al menos 6 caracteres
+    .min(6,{
+      message: "La contraseña debe tener al menos 6 caracteres",
+    
+    }) // La contraseña debe tener al menos 6 caracteres
 });

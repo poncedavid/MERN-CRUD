@@ -23,11 +23,11 @@ return (
         Imagen astronómica del día
         </h1>
 
-        <div class=" rounded shadow-xl w-3/5 p-10">
-            <img class="w-full" src={data.url} alt={data.title} />
-            <div class="px-6 py-4">
-                <div class="font-bold text-xl mb-2">{data.title}</div>
-                <p class="text-gray-700 text-base">{data.explanation}</p>
+        <div className=" rounded shadow-xl w-3/5 p-10">
+            <img className="w-full" src={data.url} alt={data.title} />
+            <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">{data.title}</div>
+                <p className="text-gray-700 text-base">{data.explanation}</p>
             </div>
         </div>
     </div>

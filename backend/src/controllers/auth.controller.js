@@ -1,4 +1,5 @@
 import User from "../models/user.model.js"; // Importando el modelo de usuario para la base de datos
+
 import bcrypt from "bcryptjs"; // Importando bcrypt para encriptar la contraseña
 
 import { createAccessToken } from "../libs/jwt.js"; // Importando la función para crear el token
@@ -10,11 +11,16 @@ export const register = async (req, res) => {
 
   try {
     const userFound = await User.findOne({ email }); //Buscar el usuario por el email
+    const userFoundUsername = await User.findOne({ username }); //Buscar el usuario por el username
     if (userFound)
-      //Si el usuario ya existe
+      //Si el correo ya existe
       return res.status(400).json(["The mail already exists"]); // Responder con un estado 400 y un mensaje de error
 
+    if (userFoundUsername)
+      //Si el usuario ya existe
+      return res.status(400).json(["The username already exists"]); // Responder con un estado 400 y un mensaje de error
 
+      
 
     const passwordHash = await bcrypt.hash(password, 10); //Encriptando la contraseña
 
@@ -24,9 +30,15 @@ export const register = async (req, res) => {
       email,
       password: passwordHash,
     });
+
     const userSaved = await newUser.save(); //Guardar en la base de datos
+
     const token = await createAccessToken({ id: userSaved._id }); //Crear token
+
+
     res.cookie("token", token); // Guardar el token en las cookies
+
+
     res.json({
       //Para no mostrar el password
       //Parametros que se van a mostrar en el front
@@ -36,6 +48,8 @@ export const register = async (req, res) => {
       createdAt: userSaved.createdAt,
       updatedAt: userSaved.updatedAt,
     });
+
+
   } catch (error) {
     // Si hay un error
     res.status(500).json({ message: error.message }); // Responder con un estado 500 y un mensaje de error
@@ -48,16 +62,17 @@ export const login = async (req, res) => {
 
   try {
     // Intentar hacer lo siguiente
+
     const userFound = await User.findOne({ email }); // Buscar el usuario por el email
     if (!userFound)
       // Si no se encuentra el usuario
-      return res.status(400).json({ message: "Usuario no encontrado" }); // Responder con un estado 400 y un mensaje de error
+      return res.status(400).json(["Usuario no encontrado"]); // Responder con un estado 400 y un mensaje de error
 
     const isMatch = await bcrypt.compare(password, userFound.password); // Comparar la contraseña
 
     if (!isMatch)
       // Si no coincide la contraseña
-      return res.status(400).json({ message: "Contraseña incorrecta" }); // Responder con un estado 400 y un mensaje de error
+      return res.status(400).json(["Contraseña incorrecta"]); // Responder con un estado 400 y un mensaje de error
 
     // no es recomendado enviar tantos mensajes de usuario y contraseña incorrecta por seguridad. La persona que intente hackear la cuenta puede saber si el usuario existe o no.
     // Se recomienda enviar un mensaje generico como "Usuario o contraseña incorrecta"
@@ -96,6 +111,8 @@ export const profile = async (req, res) => {
   // Perfil del usuario
 
   const userFound = await User.findById(req.user.id); // Buscar el usuario por el id
+  
+  
   if (!userFound)
     // Si no se encuentra el usuario
     return res.status(400).json({ message: "Usuario no encontrado" }); // Responder con un estado 400 y un mensaje de error

@@ -3,7 +3,7 @@ import Layout from "../../Layout";
 import { useForm } from "react-hook-form"; // Importamos el hook de react-hook-form
 
 import { useAuth } from "../../Context/AuthContext"; // Importamos el contexto de usuario
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useEffect } from "react";
 
 function Register() {
@@ -16,7 +16,7 @@ function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/home");
+    if (isAuthenticated) navigate("/nasa");
   }, [isAuthenticated]);
 
   const onSubmit = handleSubmit(async (values) => {
@@ -26,10 +26,11 @@ function Register() {
 
   return (
     <Layout>
-      <h1>Registro de usuario</h1>
 
       {/* Creamos un formulario con el hook de react-hook-form */}
-      <div className="bg-zinc-200 max-w-md p-10 rounded-md">
+      <div className="bg-zinc-200 max-w-md p-10 rounded-md text-center">
+      <h1 className=" font-extrabold">Registro de usuario</h1>
+
         {RegisterErrors.map((error, index) => (
           <div key={index}  className="bg-red-500 p-2  text-white" >{error}
           </div>
@@ -66,8 +67,11 @@ function Register() {
           {errors.password && (
             <span className=" text-red-500">La password es requerida</span>
           )}
-          <button type="submit">Registrarse</button>
+          <button type="submit" className="p-5 my-2 rounded-3xl border-black border">Registrarse</button>
         </form>
+        <p className="flex gap-x-2 justify-between">
+          ¿Ya tienes una cuenta? <NavLink to="/login" className="text-blue-500">Inicia sesión</NavLink>
+        </p>
       </div>
     </Layout>
   );

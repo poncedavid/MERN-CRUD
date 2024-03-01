@@ -14,11 +14,13 @@ const taskSchema = new mongoose.Schema( // Creando el esquema de tareas con mong
       type: Date,
       default: Date.now, // La fecha de creación de la tarea
     },
+
     user: { // El usuario que creó la tarea
       type: mongoose.Schema.Types.ObjectId, // Tipo de dato
       ref: "User",//referencia al modelo User
       required: true, // Requerido
     },
+    
   },
   {
     timestamps: true, // Añadir timestamps a la tarea (createdAt, updatedAt)
