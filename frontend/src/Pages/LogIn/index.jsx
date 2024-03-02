@@ -1,8 +1,9 @@
 import Layout from "../../Layout";
 
-import { NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../Context/AuthContext.jsx";
+import { useEffect } from "react";
 
 function LogIn() {
   const {
@@ -11,11 +12,19 @@ function LogIn() {
     formState: { errors },
   } = useForm();
 
-  const { signin, errors: SigninErrors } = useAuth();
+  const { signin, errors: SigninErrors, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
     signin(data);
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/tasks");
+    }
+
+  }, [isAuthenticated])
 
   return (
     <Layout>
@@ -53,9 +62,9 @@ function LogIn() {
         </form>
           <p className="flex gap-x-2 justify-between">
             ¿No tienes una cuenta?
-            <NavLink to="/register" className="text-blue-500">
+            <Link to="/register" className="text-blue-500">
               Regístrate
-            </NavLink>
+            </Link>
           </p>
         </div>
     </Layout>

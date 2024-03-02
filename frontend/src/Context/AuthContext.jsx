@@ -6,10 +6,6 @@ import {
 } from "../Api/auth.js";
 
 import Cookies from "js-cookie";
-
-
-
-
 export const AuthContext = createContext(null);
 
 export const useAuth = () => {
@@ -49,6 +45,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    Cookies.remove("token");
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -68,23 +70,22 @@ export const AuthProvider = ({ children }) => {
         return setUser(null);
       }
 
-        try {
-          const res =  await verifyTokenRequet(cookies.token);
-          if (!res.data) {
+      try {
+        const res = await verifyTokenRequet(cookies.token);
+        if (!res.data) {
           setIsAuthenticated(false);
           setLoading(false);
-          
-          return
-          }
-          setIsAuthenticated(true);
-          setUser(res.data);
-          setLoading(false);
-        } catch (error) {
-          setIsAuthenticated(false);
-          setUser(null);
-          setLoading(false);
+
+          return;
         }
-      
+        setIsAuthenticated(true);
+        setUser(res.data);
+        setLoading(false);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setUser(null);
+        setLoading(false);
+      }
     }
     checkLogin();
   }, []);
@@ -98,6 +99,7 @@ export const AuthProvider = ({ children }) => {
         user,
         isAuthenticated,
         errors,
+        logout,
       }}
     >
       {children}

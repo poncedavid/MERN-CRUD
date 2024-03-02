@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "../../Context/AuthContext.jsx";
 
 //Importando contexto de tareas.
-import { TaskProvider } from "../../Context/TaskContext.jsx";
+import { TaskProvider } from "../../Context/TasksContext.jsx";
 
 //Importando las paginas.
 import Home from "../Home";
@@ -15,7 +15,7 @@ import TaskPage from "../Task";
 import TaskFormPage from "../TaskForm";
 import Api from "../Api";
 import Register from "../Register";
-import ProfilePage from "../Profile/index.jsx";
+import ProfilePage from "../Profile";
 
 //Importando los componentes.
 import NavBar from "../../Components/NavBar";
@@ -40,7 +40,7 @@ const App = () => {
             <Route element={<ProtectedRoute />}>
     
               <Route path="/tasks" element={<TaskPage />} />
-              <Route path="/tasks/new" element={<TaskFormPage />} />
+              <Route path="/add-task" element={<TaskFormPage />} />
               <Route path="/tasks/:id" element={<TaskFormPage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>

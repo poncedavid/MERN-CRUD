@@ -24,6 +24,13 @@ function Register() {
     await signup(values);
   });
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/tasks");
+    }
+
+  }, [isAuthenticated])
+
   return (
     <Layout>
 
